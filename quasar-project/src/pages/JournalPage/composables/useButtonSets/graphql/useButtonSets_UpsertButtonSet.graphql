@@ -1,0 +1,16 @@
+mutation UseButtonSets_UpsertButtonSet($buttonSet: buttonset_insert_input!) {
+  insert_buttonset_one(
+    object: $buttonSet
+    on_conflict: {
+      constraint: buttonset_pkey
+      update_columns: [buttons, title]
+    }
+  ) {
+    id
+    title
+    buttons
+    created_at
+    creator_id
+    updated_at
+  }
+}

@@ -1,0 +1,5 @@
+mutation JournalsPage_DeleteJournalById($id: uuid!) {
+  delete_journal_by_pk(id: $id) {
+    id
+  }
+}

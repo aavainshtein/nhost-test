@@ -1,0 +1,20 @@
+query PublicJournalsPage_GetJournals($nickname_value: jsonb!) {
+  journal(
+    where: {
+      author: { metadata: { _contains: $nickname_value } }
+      is_public: { _eq: true }
+    }
+  ) {
+    id
+    title
+    videoid
+    created_at
+    updated_at
+    author_id
+    records_aggregate {
+      aggregate {
+        count
+      }
+    }
+  }
+}

@@ -1,12 +1,18 @@
-import { route } from 'quasar/wrappers';
+import { ref } from "vue";
+import { route } from "quasar/wrappers";
 import {
   createMemoryHistory,
   createRouter,
   createWebHashHistory,
   createWebHistory,
-} from 'vue-router';
+} from "vue-router";
+import { nhost } from "src/boot/nhost";
+import { useNhostClient, provideNhostClient } from "@nhost/vue";
+import { authClient } from "src/auth/authClient";
 
-import routes from './routes';
+// import { useNhostClient } from "@nhost/vue";
+
+import routes from "./routes";
 
 /*
  * If not building with SSR mode, you can
@@ -20,7 +26,9 @@ import routes from './routes';
 export default route((/* { store, ssrContext } */) => {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
-    : (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory);
+    : process.env.VUE_ROUTER_MODE === "history"
+    ? createWebHistory
+    : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -30,6 +38,47 @@ export default route((/* { store, ssrContext } */) => {
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE),
+  });
+
+  Router.beforeEach(async (to, from) => {
+    const session = ref<any>(null);
+    // const authClient = nhost.auth;
+    const user = authClient.getUser();
+    // nhost.auth.onAuthStateChanged((_, newSession) => {
+    //   session.value = newSession;
+    // });
+    console.log("user:", user, session);
+
+    // session.value = nhost;
+    // nhost.auth.onAuthStateChanged((_, newSession) => {
+    //   session.value = newSession;
+    // });
+
+    // const { nhost } = useNhostClient();
+    // const journalToLoad = to.params.id ?? null;
+    // console.log("jounal id from router params", journalToLoad);
+    // const { publicStatus } = UseJournal(journalToLoad as string);
+    // //  #todo fix new
+    // if (journalToLoad && journalToLoad != "new") {
+    //   journalId.value = journalToLoad as string;
+
+    //   while (publicStatus.value === null || publicStatus.value === undefined) {
+    //     console.log("before await in router", publicStatus.value);
+    //     await sleep(100);
+    //   }
+    // }
+
+    return authClient.isAuthenticatedAsync().then((response) => {
+      if (
+        !response &&
+        to.name !== "sign-up" &&
+        true
+        // to.name !== "user-public-page" &&
+        // !publicStatus.value
+      )
+        return { name: "sign-up" };
+      if (response && to.name === "sign-up") return { name: "journals-page" };
+    });
   });
 
   return Router;

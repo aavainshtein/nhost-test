@@ -11,4 +11,4 @@ export default boot(({ app }) => {
   app.use(nhost);
 });
 
-// export { nhost };
+export { nhost };

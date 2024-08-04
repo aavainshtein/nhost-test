@@ -1,0 +1,18 @@
+query JournalPage_GetJournalById($id: uuid!) {
+  journal_by_pk(id: $id) {
+    author_id
+    buttonset_id
+    title
+    videoid
+    records {
+      id
+      data
+      author_id
+      created_at
+      updated_at
+    }
+    journal_users {
+      user_id
+    }
+  }
+}

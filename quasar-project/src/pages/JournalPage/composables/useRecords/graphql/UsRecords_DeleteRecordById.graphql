@@ -1,0 +1,5 @@
+mutation UseRecords_DeleteRecordById($id: uuid!) {
+  delete_record_by_pk(id: $id) {
+    id
+  }
+}

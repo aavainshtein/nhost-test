@@ -1,0 +1,14 @@
+mutation JournalsPage_RemoveUserFromJournalByPk(
+  $user_id: uuid!
+  $journal_id: uuid!
+) {
+  delete_journal_user(
+    where: {
+      _and: { journal_id: { _eq: $journal_id }, user_id: { _eq: $user_id } }
+    }
+  ) {
+    returning {
+      id
+    }
+  }
+}

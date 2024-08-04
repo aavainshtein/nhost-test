@@ -1,0 +1,13 @@
+mutation JournalPage_UpsertJournal($journal: journal_insert_input!) {
+  insert_journal_one(
+    object: $journal
+    on_conflict: {
+      constraint: journal_pkey
+      update_columns: [buttonset_id, title]
+    }
+  ) {
+    id
+    author_id
+    buttonset_id
+  }
+}

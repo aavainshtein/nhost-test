@@ -1,0 +1,7 @@
+mutation JournalsPage_DeleteRecordsForJournalId($journal_id: uuid!) {
+  delete_record(where: { journal_id: { _eq: $journal_id } }) {
+    returning {
+      journal_id
+    }
+  }
+}

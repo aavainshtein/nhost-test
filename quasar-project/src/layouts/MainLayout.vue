@@ -1,106 +1,77 @@
-<template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-  </q-layout>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue';
-import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue';
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { useNhostClient } from "@nhost/vue";
+import { nhost } from "src/boot/nhost";
 
-defineOptions({
-  name: 'MainLayout',
-});
-
-const linksList: EssentialLinkProps[] = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
-  },
-];
+const router = useRouter();
+console.log("mainl");
 
 const leftDrawerOpen = ref(false);
+
+// const user = authClient.getUser();
+
+// const nhostClient = useNhostClient();
+const authClient = nhost.auth;
+const user = authClient.getUser();
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
+
+const signOut = () => {
+  // authClient.signOut();
+  router.push({ name: "sign-up" });
+};
 </script>
+
+<template>
+  <q-layout view="hhh lpR fFf">
+    <q-header reveal bordered class="bg-primary text-white">
+      <q-toolbar>
+        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+
+        <q-toolbar-title> Nhostest </q-toolbar-title>
+      </q-toolbar>
+    </q-header>
+
+    <q-drawer v-model="leftDrawerOpen" side="left" overlay bordered
+      ><div class="column flex full-height q-pa-md">
+        <q-list>
+          <q-item clicable v-ripple :to="{ name: 'journals-page' }"
+            >Journals</q-item
+          >
+          <q-separator spaced inset />
+          <q-item clicable v-ripple :to="{ name: 'profile-page' }">
+            <q-item-section> Profile </q-item-section>
+          </q-item>
+          <q-separator spaced inset />
+          <q-item
+            clicable
+            v-ripple
+            :to="{
+              name: 'user-public-page',
+              params: { nickname: user?.metadata.nickname },
+            }"
+            >Public page</q-item
+          >
+        </q-list>
+        <q-space />
+        <q-btn
+          v-if="authClient.isAuthenticated()"
+          unelevated
+          color="negative"
+          style="height: 48px"
+          @click="signOut"
+          label="Sign Out"
+        />
+      </div>
+
+      <!-- drawer content -->
+    </q-drawer>
+
+    <q-page-container class="flex flex-center" style="background: white">
+      <router-view />
+    </q-page-container>
+  </q-layout>
+</template>

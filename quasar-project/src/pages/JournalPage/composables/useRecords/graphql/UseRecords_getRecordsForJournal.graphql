@@ -1,0 +1,10 @@
+query UseRecords_getRecordsForJournal($journal_id: uuid!) {
+  record(where: { journal_id: { _eq: $journal_id } }) {
+    data
+    created_at
+    updated_at
+    author_id
+    id
+    journal_id
+  }
+}
