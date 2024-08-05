@@ -7,7 +7,7 @@ import {
   createWebHistory,
 } from "vue-router";
 import { nhost } from "src/boot/nhost";
-import { useNhostClient, provideNhostClient } from "@nhost/vue";
+import { useNhostClient } from "@nhost/vue";
 import { authClient } from "src/auth/authClient";
 
 // import { useNhostClient } from "@nhost/vue";
@@ -42,12 +42,13 @@ export default route((/* { store, ssrContext } */) => {
 
   Router.beforeEach(async (to, from) => {
     const session = ref<any>(null);
-    // const authClient = nhost.auth;
+    const authClient = nhost.auth;
+    console.log("authClient", authClient);
     const user = authClient.getUser();
     // nhost.auth.onAuthStateChanged((_, newSession) => {
     //   session.value = newSession;
     // });
-    console.log("user:", user, session);
+    console.log("user router:", user, session);
 
     // session.value = nhost;
     // nhost.auth.onAuthStateChanged((_, newSession) => {
@@ -69,15 +70,21 @@ export default route((/* { store, ssrContext } */) => {
     // }
 
     return authClient.isAuthenticatedAsync().then((response) => {
+      console.log("response", response);
       if (
         !response &&
         to.name !== "sign-up" &&
         true
         // to.name !== "user-public-page" &&
         // !publicStatus.value
-      )
+      ) {
+        console.log("first if in router");
         return { name: "sign-up" };
-      if (response && to.name === "sign-up") return { name: "journals-page" };
+      }
+      if (response && to.name === "sign-up") {
+        console.log(" second if in router");
+        return { name: "journals-page" };
+      }
     });
   });
 

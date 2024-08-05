@@ -9,6 +9,7 @@ const nhost = new NhostClient({
 export default boot(({ app }) => {
   app.config.globalProperties.$nhost = nhost;
   app.use(nhost);
+  app.provide("nhost", nhost);
 });
 
 export { nhost };

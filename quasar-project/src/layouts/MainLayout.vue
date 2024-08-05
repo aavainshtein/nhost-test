@@ -20,7 +20,7 @@ function toggleLeftDrawer() {
 }
 
 const signOut = () => {
-  // authClient.signOut();
+  authClient.signOut();
   router.push({ name: "sign-up" });
 };
 </script>
@@ -46,7 +46,7 @@ const signOut = () => {
             <q-item-section> Profile </q-item-section>
           </q-item>
           <q-separator spaced inset />
-          <q-item
+          <!-- <q-item
             clicable
             v-ripple
             :to="{
@@ -54,9 +54,10 @@ const signOut = () => {
               params: { nickname: user?.metadata.nickname },
             }"
             >Public page</q-item
-          >
+          > -->
         </q-list>
         <q-space />
+        <pre>{{ user }}</pre>
         <q-btn
           v-if="authClient.isAuthenticated()"
           unelevated

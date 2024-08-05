@@ -10,10 +10,7 @@ console.log("signl");
 
 <template>
   <q-layout view="hhh lpR fFf">
-    <q-page-container
-      class="flex flex-center"
-      style="background: radial-gradient(circle, #35a2ff 0%, #ff1a00 100%)"
-    >
+    <q-page-container class="flex flex-center full-height">
       <router-view />
     </q-page-container>
   </q-layout>

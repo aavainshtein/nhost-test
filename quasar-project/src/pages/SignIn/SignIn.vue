@@ -22,19 +22,22 @@ const handleSignIn = async () => {
 </script>
 
 <template>
-  <div>
+  <div class="column items-center">
     <h1>Test Project</h1>
     <p>powered by Nhost and Vue</p>
-    <form @submit.prevent="handleSignIn">
+    <form
+      class="q-gutter-y-sm column items center"
+      @submit.prevent="handleSignIn"
+    >
       <div>
         <input type="email" placeholder="Your email" v-model="email" required />
       </div>
-      <div>
-        <button :disabled="loading">
-          <span v-if="loading">Loading</span>
-          <span v-else>Send me a Magic Link!</span>
-        </button>
-      </div>
+
+      <button :disabled="loading">
+        <span v-if="loading">Loading</span>
+        <span v-else>Send me a Magic Link!</span>
+      </button>
+
       <p v-if="error">{{ error.message }}</p>
     </form>
   </div>
