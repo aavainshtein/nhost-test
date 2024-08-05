@@ -8,6 +8,7 @@
 - "!include auth_user_security_keys.yaml"
 - "!include auth_users.yaml"
 - "!include public_journal.yaml"
+- "!include public_journal_invitation.yaml"
 - "!include public_journal_user.yaml"
 - "!include public_test_table.yaml"
 - "!include storage_buckets.yaml"

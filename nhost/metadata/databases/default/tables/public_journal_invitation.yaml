@@ -1,10 +1,7 @@
 table:
-  name: journal_user
+  name: journal_invitation
   schema: public
 object_relationships:
   - name: journal
     using:
       foreign_key_constraint_on: journal_id
-  - name: user
-    using:
-      foreign_key_constraint_on: user_id

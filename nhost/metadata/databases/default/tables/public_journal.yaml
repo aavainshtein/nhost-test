@@ -5,3 +5,18 @@ object_relationships:
   - name: user
     using:
       foreign_key_constraint_on: author_id
+array_relationships:
+  - name: journal_invitations
+    using:
+      foreign_key_constraint_on:
+        column: journal_id
+        table:
+          name: journal_invitation
+          schema: public
+  - name: journal_users
+    using:
+      foreign_key_constraint_on:
+        column: journal_id
+        table:
+          name: journal_user
+          schema: public
