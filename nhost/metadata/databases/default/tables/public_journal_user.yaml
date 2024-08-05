@@ -1,0 +1,3 @@
+table:
+  name: journal_user
+  schema: public
