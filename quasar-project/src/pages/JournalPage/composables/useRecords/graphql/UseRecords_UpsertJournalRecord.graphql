@@ -1,8 +1,0 @@
-mutation UseRecords_UpsertRecord($record: record_insert_input!) {
-  insert_record_one(
-    object: $record
-    on_conflict: { constraint: record_pkey, update_columns: data }
-  ) {
-    id
-  }
-}

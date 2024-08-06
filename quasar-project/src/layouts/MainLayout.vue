@@ -57,7 +57,7 @@ const signOut = () => {
           > -->
         </q-list>
         <q-space />
-        <pre>{{ user }}</pre>
+        <!-- <pre>{{ user }}</pre> -->
         <q-btn
           v-if="authClient.isAuthenticated()"
           unelevated

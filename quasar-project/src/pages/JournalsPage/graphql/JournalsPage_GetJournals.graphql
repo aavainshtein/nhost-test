@@ -2,11 +2,11 @@ query JournalsPage_GetJournals {
   journal {
     id
     title
-    videoid
+
     created_at
     updated_at
     author_id
-    records_aggregate {
+    comments_aggregate {
       aggregate {
         count
       }

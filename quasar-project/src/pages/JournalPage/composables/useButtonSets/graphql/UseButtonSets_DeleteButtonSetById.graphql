@@ -1,5 +1,0 @@
-mutation UseButtonSets_DeleteButtonSetById($id: uuid!) {
-  delete_buttonset_by_pk(id: $id) {
-    id
-  }
-}

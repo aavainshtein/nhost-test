@@ -1,7 +1,7 @@
-mutation JournalPage_UpsertRecord($record: record_insert_input!) {
-  insert_record_one(
-    object: $record
-    on_conflict: { constraint: record_pkey, update_columns: data }
+mutation JournalPage_UpsertComment($comment: comment_insert_input!) {
+  insert_comment_one(
+    object: $comment
+    on_conflict: { constraint: comment_pkey, update_columns: content }
   ) {
     id
   }

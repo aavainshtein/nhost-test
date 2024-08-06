@@ -107,7 +107,7 @@ import { useRouter } from "vue-router";
   cursor: pointer
 
 .section-header
-  color: #ffffff
+  color: #000000
   font-size: x-large
   padding: 20px 0 20px 24px
 </style>

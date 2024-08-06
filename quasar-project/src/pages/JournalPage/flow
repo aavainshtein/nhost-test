@@ -1,8 +1,0 @@
-```mermaid
-flowchart TD
-    A[loading] --> B{'isNewJournal'}
-    B -->|no| C[query Journal+Records]
-    C --> D[Rethink]
-    D --> B
-    B ---->|No| E[End]
-```
