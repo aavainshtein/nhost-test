@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
-import { LocalStorage, Dialog } from "quasar";
-import { useRouter } from "vue-router";
+import { ref, onMounted, computed } from 'vue'
+import { LocalStorage, Dialog } from 'quasar'
+import { useRouter } from 'vue-router'
 
 // const router = useRouter()
 

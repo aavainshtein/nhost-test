@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import EssentialLink, {
-  EssentialLinkProps,
-} from "components/EssentialLink.vue";
-import { useRouter } from "vue-router";
+import { ref } from 'vue'
+import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue'
+import { useRouter } from 'vue-router'
 
-console.log("signl");
+console.log('signl')
 </script>
 
 <template>

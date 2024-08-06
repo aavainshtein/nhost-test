@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useSignInEmailPasswordless } from "@nhost/vue";
+import { ref } from 'vue'
+import { useSignInEmailPasswordless } from '@nhost/vue'
 
-const email = ref("");
+const email = ref('')
 
-const loading = ref(false);
+const loading = ref(false)
 
-const { signInEmailPasswordless, error } = useSignInEmailPasswordless();
+const { signInEmailPasswordless, error } = useSignInEmailPasswordless()
 
 const handleSignIn = async () => {
-  loading.value = true;
-  const { error } = await signInEmailPasswordless(email.value);
+  loading.value = true
+  const { error } = await signInEmailPasswordless(email.value)
   if (error) {
-    console.error({ error });
-    loading.value = false;
-    return;
+    console.error({ error })
+    loading.value = false
+    return
   }
-  loading.value = false;
-  alert("Magic Link Sent!");
-};
+  loading.value = false
+  alert('Magic Link Sent!')
+}
 </script>
 
 <template>
@@ -30,7 +30,12 @@ const handleSignIn = async () => {
       @submit.prevent="handleSignIn"
     >
       <div>
-        <input type="email" placeholder="Your email" v-model="email" required />
+        <input
+          type="email"
+          placeholder="Your email"
+          v-model="email"
+          required
+        />
       </div>
 
       <button :disabled="loading">

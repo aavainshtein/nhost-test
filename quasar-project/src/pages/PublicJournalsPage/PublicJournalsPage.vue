@@ -7,31 +7,25 @@ import { authClient } from 'src/auth/authClient'
 import JournalCard from 'src/components/JournalCard/JournalCard.vue'
 import ShareJournalDialog from 'src/components/ShareJournalDialog/ShareJournalDialog.vue'
 
-import { PublicJournalsPage_GetJournalsDocument } from 'src/gql/types'
+// const props = defineProps({
+//   nickname: { type: String, required: true },
+// });
 
-import { useQuery, useMutation } from '@vue/apollo-composable'
-import { Journal } from './types'
-import { stringLiteral } from '@babel/types'
+// console.log("publick page, string for query:", props.nickname);
 
-const props = defineProps({
-  nickname: { type: String, required: true },
-})
+// const router = useRouter();
 
-console.log('publick page, string for query:', props.nickname)
+// const currentUserId = authClient.getUser()?.id as string;
 
-const router = useRouter()
+// // const journalIdForShareDialog = ref<Journal['id'] | null>(null)
 
-const currentUserId = authClient.getUser()?.id as string
+// const { result, onResult, refetch } = useQuery(
+//   PublicJournalsPage_GetJournalsDocument,
+//   () => ({ nickname_value: { nickname: props.nickname } }),
+//   { fetchPolicy: "no-cache" },
+// );
 
-// const journalIdForShareDialog = ref<Journal['id'] | null>(null)
-
-const { result, onResult, refetch } = useQuery(
-  PublicJournalsPage_GetJournalsDocument,
-  () => ({ nickname_value: { nickname: props.nickname } }),
-  { fetchPolicy: 'no-cache' },
-)
-
-const journals = computed(() => result.value?.journal ?? [])
+// const journals = computed(() => result.value?.journal ?? []);
 // const sharedJournals = computed(
 //   () => result.value?.journal.filter((x) => x.author_id !== currentUserId) ?? []
 // )
@@ -103,8 +97,8 @@ const getImageUrl = (journal: Journal) =>
 </script>
 <template>
   <q-page class="flex column">
-    <div class="section-header">{{ nickname }} Journals</div>
-    <div class="flex q-gutter-lg q-pa-lg row justify-center">
+    <div class="section-header">Journals</div>
+    <!-- <div class="flex q-gutter-lg q-pa-lg row justify-center">
       <div v-if="!journals.length > 0">No public journals</div>
       <journal-card
         v-for="journal in journals"
@@ -113,7 +107,7 @@ const getImageUrl = (journal: Journal) =>
         :key="journal.id"
         @open-journal="openJournal"
       />
-    </div>
+    </div> -->
   </q-page>
   <!-- <share-journal-dialog
     :journalId="journalIdForShareDialog"

@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { nhost } from "src/boot/nhost";
+import { ref, computed } from 'vue'
+import { nhost } from 'src/boot/nhost'
 // import { authClient } from 'src/auth/authClient'
 
-const authClient = nhost.auth;
+const authClient = nhost.auth
 
 // console.log("user", authClient.getUser());
-const user = authClient.getUser();
-const isPwd = ref(true);
-const password = ref("");
-const newPasswordInputRef = ref(null);
-const nickname = ref<string | null>(null);
+const user = authClient.getUser()
+const isPwd = ref(true)
+const password = ref('')
+const newPasswordInputRef = ref(null)
+const nickname = ref<string | null>(null)
 </script>
 
 <template>
@@ -54,7 +54,10 @@ const nickname = ref<string | null>(null);
     </q-card-section>
     <q-space />
     <q-card-section>
-      <q-btn label="delete account" color="negative"></q-btn
+      <q-btn
+        label="delete account"
+        color="negative"
+      ></q-btn
     ></q-card-section>
     <!-- </q-card> -->
   </q-page>
