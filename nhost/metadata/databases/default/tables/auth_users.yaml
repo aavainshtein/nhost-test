@@ -120,3 +120,14 @@ array_relationships:
         table:
           name: user_providers
           schema: auth
+event_triggers:
+  - name: inventation-check
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{NHOST_FUNCTIONS_URL}}/inventation-fulfill/'
