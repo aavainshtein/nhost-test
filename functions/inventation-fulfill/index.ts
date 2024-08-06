@@ -4,11 +4,12 @@
 export default async function handler(req, res) {
   const { event } = req.body;
 
+  console.log("event", event);
   // Получаем email и ID нового пользователя
-  const email = event.data.new.email;
-  const userId = event.data.new.id;
+  //   const email = event.data.new.email;
+  //   const userId = event.data.new.id;
 
-  console.log({ email, userId });
+  //   console.log({ email, userId });
 
   //   // Шаг 1: Проверяем, существует ли приглашение для этого email
   //   const INVITATION_QUERY = gql`
@@ -48,5 +49,7 @@ export default async function handler(req, res) {
   //     await nhost.graphql.request(INVITATION_UPDATE_MUTATION, { id: response.data.journal_invitation[0].id });
   //   }
 
-  res.status(200).json({ message: "User processed successfully" });
+  res
+    .status(200)
+    .json({ message: "User processed successfully", event: event });
 }
