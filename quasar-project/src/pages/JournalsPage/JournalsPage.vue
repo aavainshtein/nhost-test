@@ -2,6 +2,48 @@
 import { ref, onMounted, computed } from 'vue'
 import { LocalStorage, Dialog } from 'quasar'
 import { useRouter } from 'vue-router'
+import { nhost } from 'src/boot/nhost'
+import { gql } from 'graphql-tag'
+
+const GET_JOURNALS_QUERY = gql`
+  query JournalsPage_GetJournals {
+    journal {
+      id
+      title
+
+      created_at
+      updated_at
+      author_id
+      comments_aggregate {
+        aggregate {
+          count
+        }
+      }
+    }
+  }
+`
+
+const journals = computed(
+  () => nhost.graphql.useQuery(GET_JOURNALS_QUERY).data?.journal ?? [],
+)
+
+const INSERT_JOURNAL_MUTATION = gql`
+  mutation JournalsPage_InsertJournal($title: String!, $content: String!) {
+    insert_journal_one(object: { title: $title, content: $content }) {
+      id
+    }
+  }
+`
+
+const insertJournal = async () => {
+  const title = 'test'
+  const content = 'test'
+  const { data } = await nhost.graphql.request(INSERT_JOURNAL_MUTATION, {
+    title,
+    content,
+  })
+  console.log(data)
+}
 
 // const router = useRouter()
 
@@ -92,6 +134,7 @@ import { useRouter } from 'vue-router'
 <template>
   <q-page class="flex column">
     <div class="section-header">My Journals</div>
+    <q-btn @click="insertJournal" />
   </q-page>
 </template>
 
