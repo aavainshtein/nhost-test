@@ -5,12 +5,12 @@ import { nhost } from "../_lib/nhostClient";
 export default async function handler(req, res) {
   const { event } = req.body;
 
-  console.log("event", event, 'mhost', nhost);
+  console.log("event", event, "mhost", nhost);
   // Получаем email и ID нового пользователя
-  //   const email = event.data.new.email;
-  //   const userId = event.data.new.id;
+  const email = event.data?.new?.email;
+  const userId = event.data?.new?.id;
 
-  //   console.log({ email, userId });
+  console.log({ email, userId });
 
   //   // Шаг 1: Проверяем, существует ли приглашение для этого email
   //   const INVITATION_QUERY = gql`
