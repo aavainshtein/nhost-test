@@ -20,3 +20,56 @@ array_relationships:
         table:
           name: journal_user
           schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      set:
+        author_id: x-hasura-User-Id
+      columns:
+        - author_id
+        - content
+        - created_at
+        - id
+        - is_public
+        - title
+        - updated_at
+    comment: ""
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - is_public
+        - content
+        - title
+        - created_at
+        - updated_at
+        - author_id
+        - id
+      filter:
+        journal_users:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
+      allow_aggregations: true
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - content
+        - title
+      filter:
+        journal_users:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
+      check: null
+    comment: ""
+delete_permissions:
+  - role: user
+    permission:
+      filter:
+        author_id:
+          _eq: X-Hasura-User-Id
+    comment: ""

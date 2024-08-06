@@ -8,3 +8,75 @@ object_relationships:
   - name: user
     using:
       foreign_key_constraint_on: user_id
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        _or:
+          - journal:
+              author_id:
+                _eq: X-Hasura-User-Id
+          - journal:
+              journal_users:
+                user:
+                  id:
+                    _eq: X-Hasura-User-Id
+      columns:
+        - is_editor
+        - created_at
+        - updated_at
+        - id
+        - journal_id
+        - user_id
+    comment: ""
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - is_editor
+        - created_at
+        - updated_at
+        - id
+        - journal_id
+        - user_id
+      filter:
+        _or:
+          - journal:
+              author_id:
+                _eq: X-Hasura-User-Id
+          - journal:
+              journal_users:
+                user:
+                  id:
+                    _eq: X-Hasura-User-Id
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - is_editor
+        - created_at
+        - updated_at
+        - id
+        - journal_id
+        - user_id
+      filter:
+        _or:
+          - journal:
+              author_id:
+                _eq: X-Hasura-User-Id
+          - journal:
+              journal_users:
+                user:
+                  id:
+                    _eq: X-Hasura-User-Id
+      check: null
+    comment: ""
+delete_permissions:
+  - role: user
+    permission:
+      filter:
+        journal:
+          author_id:
+            _eq: X-Hasura-User-Id
+    comment: ""
