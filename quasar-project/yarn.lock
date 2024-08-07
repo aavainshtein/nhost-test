@@ -211,6 +211,15 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@nhost/apollo@^7.1.3":
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/@nhost/apollo/-/apollo-7.1.3.tgz#279c802227a9378fd5e954fbd273cc2e38d983e0"
+  integrity sha512-W1or/0asoPyOKbwXp4BOT+Fb3+wwulmBet1mv+D5YgjbOsz0MC2qiGHArMWYxf/qN+bpCkQ4apsIX6mumucE1w==
+  dependencies:
+    graphql "16.8.1"
+    graphql-ws "^5.16.0"
+    jwt-decode "^4.0.0"
+
 "@nhost/graphql-js@0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@nhost/graphql-js/-/graphql-js-0.3.0.tgz#0db0c81f851b6cbb09d292a89eeca02fefaa3076"
@@ -242,7 +251,7 @@
     graphql "16.8.1"
     xstate "^4.38.3"
 
-"@nhost/nhost-js@3.1.6":
+"@nhost/nhost-js@3.1.6", "@nhost/nhost-js@^3.1.6":
   version "3.1.6"
   resolved "https://registry.yarnpkg.com/@nhost/nhost-js/-/nhost-js-3.1.6.tgz#c64fbfab8fcd5a3c9a5e3d9661d7b98c7c47e135"
   integrity sha512-5DPm3vvsiMzJxYzMSxHwqIsn1GfDsZ1LHq5vndHILL8OH5LHPh3tVlUc4EcElbkqN81yzZ++umcDxxH+w8pkAg==
@@ -602,6 +611,15 @@
     "@volar/language-core" "2.4.0-alpha.18"
     path-browserify "^1.0.1"
     vscode-uri "^3.0.8"
+
+"@vue/apollo-composable@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@vue/apollo-composable/-/apollo-composable-4.0.2.tgz#ea3c001d25b3bf659aad5ae7a849fed3928aaa35"
+  integrity sha512-/yfEktliXw+oMy/6n9C0J05woYoKlM+kcffVXMh0qljbXdrioyj0WkR/LgPdpnRf6TglFnjIgCKKicd5Gyzpnw==
+  dependencies:
+    throttle-debounce "^5.0.0"
+    ts-essentials "^9.4.0"
+    vue-demi "^0.14.6"
 
 "@vue/compiler-core@3.4.35":
   version "3.4.35"
@@ -2493,6 +2511,11 @@ graphql-tag@^2.12.6:
   dependencies:
     tslib "^2.1.0"
 
+graphql-ws@^5.16.0:
+  version "5.16.0"
+  resolved "https://registry.yarnpkg.com/graphql-ws/-/graphql-ws-5.16.0.tgz#849efe02f384b4332109329be01d74c345842729"
+  integrity sha512-Ju2RCU2dQMgSKtArPbEtsK5gNLnsQyTNIo/T7cZNp96niC1x0KdJNZV0TIoilceBPQwfb5itrGl8pkFeOUMl4A==
+
 graphql@16.8.1:
   version "16.8.1"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.8.1.tgz#1930a965bef1170603702acdb68aedd3f3cf6f07"
@@ -4043,6 +4066,11 @@ text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==
 
+throttle-debounce@^5.0.0:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-5.0.2.tgz#ec5549d84e053f043c9fd0f2a6dd892ff84456b1"
+  integrity sha512-B71/4oyj61iNH0KeCamLuE2rmKuTO5byTOSVwECM5FA7TiAiAW+UqTKZ9ERueC4qvgSttUhdmq1mXC3kJqGX7A==
+
 through@^2.3.6:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
@@ -4086,6 +4114,11 @@ ts-api-utils@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/ts-api-utils/-/ts-api-utils-1.3.0.tgz#4b490e27129f1e8e686b45cc4ab63714dc60eea1"
   integrity sha512-UQMIo7pb8WRomKR1/+MFVLTroIvDVtMX3K6OUir8ynLyzB8Jeriont2bTAtmNPa1ekAgN7YPDyf6V+ygrdU+eQ==
+
+ts-essentials@^9.4.0:
+  version "9.4.2"
+  resolved "https://registry.yarnpkg.com/ts-essentials/-/ts-essentials-9.4.2.tgz#6d4bd23b46b61bf3e031816cc887e839eb62c33c"
+  integrity sha512-mB/cDhOvD7pg3YCLk2rOtejHjjdSi9in/IBYE13S+8WA5FBSraYf4V/ws55uvs0IvQ/l0wBOlXy5yBNZ9Bl8ZQ==
 
 ts-invariant@^0.10.3:
   version "0.10.3"
@@ -4326,7 +4359,7 @@ vscode-uri@^3.0.2, vscode-uri@^3.0.8:
   resolved "https://registry.yarnpkg.com/vscode-uri/-/vscode-uri-3.0.8.tgz#1770938d3e72588659a172d0fd4642780083ff9f"
   integrity sha512-AyFQ0EVmsOZOlAnxoFOGOq1SQDWAB7C6aqMGS23svWAllfOaxbuFvcT8D1i8z3Gyn8fraVeZNNmN6e9bxxXkKw==
 
-vue-demi@>=0.14.8:
+vue-demi@>=0.14.8, vue-demi@^0.14.6:
   version "0.14.10"
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.14.10.tgz#afc78de3d6f9e11bf78c55e8510ee12814522f04"
   integrity sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==
