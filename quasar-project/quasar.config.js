@@ -10,6 +10,22 @@
 
 /* eslint func-names: 0 */
 /* eslint global-require: 0 */
+// const secretsPath = path.resolve(__dirname, '.secrets')
+// if (fs.existsSync(secretsPath)) {
+//   const result = dotenv.config({ path: secretsPath })
+
+//   if (result.error) {
+//     throw result.error
+//   }
+
+//   console.log('Secrets loaded successfully')
+// } else {
+//   console.warn('.secrets file not found')
+// }
+
+require('dotenv-expand').expand(
+  require('dotenv').config({ path: require('find-config')('.secrets') }),
+)
 
 const { configure } = require('quasar/wrappers')
 const path = require('path')
@@ -56,7 +72,9 @@ module.exports = configure((/* ctx */) => ({
 
     // publicPath: '/',
     // analyze: true,
-    // env: {},
+    env: {
+      ...process.env,
+    },
     // rawDefine: {}
     // ignorePublicFolder: true,
     // minify: false,

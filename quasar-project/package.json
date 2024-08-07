@@ -13,9 +13,13 @@
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore"
   },
   "dependencies": {
+    "@apollo/client": "^3.11.3",
     "@nhost/vue": "^2.6.3",
     "@quasar/extras": "^1.16.4",
     "axios": "^1.2.1",
+    "dotenv": "^16.4.5",
+    "dotenv-expand": "^11.0.6",
+    "find-config": "^1.0.0",
     "graphql": "^16.9.0",
     "graphql-tag": "^2.12.6",
     "quasar": "^2.16.0",
