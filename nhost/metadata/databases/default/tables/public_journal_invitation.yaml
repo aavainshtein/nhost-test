@@ -17,24 +17,30 @@ insert_permissions:
               journal_users:
                 user_id:
                   _eq: X-Hasura-User-Id
+      set:
+        author_id: x-hasura-User-Id
       columns:
-        - is_fulfilled
-        - email
+        - author_id
         - created_at
-        - updated_at
+        - email
         - id
+        - is_fulfilled
         - journal_id
+        - updated_at
+        - user_id
     comment: ""
 select_permissions:
   - role: user
     permission:
       columns:
-        - is_fulfilled
-        - email
+        - author_id
         - created_at
-        - updated_at
+        - email
         - id
+        - is_fulfilled
         - journal_id
+        - updated_at
+        - user_id
       filter:
         _or:
           - journal:
