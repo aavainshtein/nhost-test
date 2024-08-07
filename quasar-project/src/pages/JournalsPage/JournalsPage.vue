@@ -1,41 +1,64 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { LocalStorage, Dialog } from 'quasar'
+import { LocalStorage, Dialog, is } from 'quasar'
 import { useRouter } from 'vue-router'
 import { useQuery, useMutation } from '@vue/apollo-composable'
 
 import { nhost } from 'src/boot/nhost'
 import { gql } from 'graphql-tag'
 
-const GET_JOURNALS_QUERY = gql`
-  query JournalsPage_GetJournals {
-    journal {
-      id
-      title
-
-      created_at
-      updated_at
-      author_id
-      # comments_aggregate {
-      #   aggregate {
-      #     count
-      #   }
-      # }
-    }
-  }
-`
-
 // const journals = computed(
 //   () => nhost.graphql.request(GET_JOURNALS_QUERY).data?.journal ?? [],
 // )
 
-const { result, onResult, refetch, loading, error } = useQuery(
-  GET_JOURNALS_QUERY,
+const isAddDialogShown = ref(false)
+
+type JournalModel = {
+  title: string | null
+  content: string | null
+}
+
+const newJournalModel = ref<JournalModel>({} as JournalModel)
+
+const {
+  result: journalsResult,
+  refetch: journalsRefetch,
+  loading,
+  error,
+} = useQuery(
+  gql`
+    query JournalsPage_GetJournals {
+      journal {
+        id
+        title
+        content
+        created_at
+        updated_at
+        author_id
+        # comments_aggregate {
+        #   aggregate {
+        #     count
+        #   }
+        # }
+      }
+    }
+  `,
   {},
   { fetchPolicy: 'network-only' },
 )
 
-const journals = computed(() => result.value?.journal ?? [])
+const journals = computed(
+  () =>
+    journalsResult.value?.journal.map((j) => ({
+      id: j.id,
+      created_at: j.created_at,
+      updated_at: j.updated_at,
+      title: j.title,
+      content: j.content,
+    })) ?? [],
+)
+
+type Journal = (typeof journals.value)[0]
 
 const INSERT_JOURNAL_MUTATION = gql`
   mutation JournalsPage_InsertJournal($title: String!, $content: String!) {
@@ -46,18 +69,17 @@ const INSERT_JOURNAL_MUTATION = gql`
 `
 
 const insertJournal = async () => {
-  const title = 'test'
-  const content = 'test'
+  const title = newJournalModel.value.title
+  const content = newJournalModel.value.content
   const { data } = await nhost.graphql.request(INSERT_JOURNAL_MUTATION, {
     title,
     content,
   })
-  console.log(data)
+  closeAddJournalDialog()
+  journalsRefetch()
 }
 
-console.log('process', process.env.MYSECRET)
-
-// const router = useRouter()
+const router = useRouter()
 
 // const currentUserId = authClient.getUser()?.id as string
 
@@ -89,19 +111,20 @@ console.log('process', process.env.MYSECRET)
 //   JournalsPage_RemoveUserFromJournalByPkDocument,
 // )
 
-// const openJournal = (journal?: Journal) => {
-//   if (!!journal) {
-//     router.push({
-//       name: 'journal-page-id',
-//       params: { id: journal.id },
-//     })
-//   }
-//   if (!journal)
-//     router.push({
-//       name: 'journal-page-id',
-//       params: { id: 'new' },
-//     })
-// }
+const openJournal = (journal?: Journal) => {
+  console.log(journal)
+  if (!!journal) {
+    router.push({
+      name: 'journal-page-id',
+      params: { id: journal.id },
+    })
+  }
+  // if (!journal)
+  //   router.push({
+  //     name: 'journal-page-id',
+  //     params: { id: 'new' },
+  //   })
+}
 
 // const getImageUrl = (journal: Journal) =>
 //   'https://i.ytimg.com/vi/' + journal.videoid + '/mqdefault.jpg'
@@ -142,12 +165,82 @@ console.log('process', process.env.MYSECRET)
 // const openShareDialog = (journal: Journal) => {
 //   journalIdForShareDialog.value = journal.id
 // }
+
+function closeAddJournalDialog() {
+  newJournalModel.value = {
+    title: '',
+    content: '',
+  }
+  isAddDialogShown.value = false
+}
 </script>
 <template>
-  <q-page class="flex column">
-    <div class="section-header">My Journals {{ journals }}</div>
-    <q-btn @click="insertJournal" />
+  <q-page class="flex column q-pa-md">
+    <q-table
+      :rows="journals"
+      @row-click="(evt, row) => openJournal(row)"
+    >
+      <template #top>
+        <div
+          class="row justify-between items-center q-mb-md no-wrap full-width"
+        >
+          <div class="text-h5">Journals</div>
+          <q-btn
+            label="add"
+            @click="isAddDialogShown = true"
+          />
+          <!-- <q-btn
+          label="add"
+          @click="isAddDialogShown = true"
+        /> -->
+        </div>
+      </template>
+    </q-table>
   </q-page>
+  <q-dialog
+    v-model="isAddDialogShown"
+    @hide="closeAddJournalDialog"
+  >
+    <q-card
+      style="width: 25rem"
+      class="column"
+    >
+      <q-card-section class="column col-grow">
+        <div class="row justify-between items-center q-mb-md no-wrap">
+          <div class="text-h5">Create new journal</div>
+          <q-btn
+            icon="close"
+            v-close-popup
+          />
+        </div>
+      </q-card-section>
+      <q-card-section>
+        <q-input
+          v-model="newJournalModel.title"
+          label="Title"
+        />
+        <q-input
+          v-model="newJournalModel.content"
+          type="textarea"
+          lines="3"
+          label="Content"
+        />
+      </q-card-section>
+      <q-card-actions
+        align="right"
+        class="text-primary"
+      >
+        <q-btn
+          label="Cancel"
+          @click="closeAddJournalDialog"
+        />
+        <q-btn
+          label="Add"
+          @click="insertJournal"
+        />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <style lang="sass" scoped>

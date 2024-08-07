@@ -1,7 +1,65 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, onMounted, computed } from 'vue'
+import { LocalStorage, Dialog, is } from 'quasar'
+import { useRouter } from 'vue-router'
+import { useQuery, useMutation } from '@vue/apollo-composable'
+
+import { nhost } from 'src/boot/nhost'
+import { gql } from 'graphql-tag'
+
+const props = defineProps({
+  id: { type: String, required: true },
+})
+
+const { result, onResult, refetch } = useQuery(
+  gql`
+    query JournalPage_GetJournal($id: uuid!) {
+      journal_by_pk(id: $id) {
+        id
+        title
+        content
+        created_at
+        updated_at
+        author_id
+        journal_invitations {
+          created_at
+          email
+          is_fulfilled
+        }
+        journal_invitations {
+          created_at
+          email
+          is_fulfilled
+        }
+        journal_users {
+          is_editor
+          created_at
+          user {
+            email
+          }
+        }
+        # comments_aggregate {
+        #   aggregate {
+        #     count
+        #   }
+        # }
+      }
+    }
+  `,
+  { id: props.id },
+  { enabled: !!props.id, fetchPolicy: 'network-only' },
+)
+
+const journal = computed(() => result.value?.journal_by_pk ?? {})
+</script>
 
 <template>
-  <q-page class="column col-grow full-width full-height"> jouranl page </q-page>
+  <q-page class="column col-grow full-width full-height">
+    jouranl page
+    <pre>
+      {{ journal }}
+    </pre>
+  </q-page>
 </template>
 
 <style>
