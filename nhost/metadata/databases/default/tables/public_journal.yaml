@@ -47,10 +47,13 @@ select_permissions:
         - author_id
         - id
       filter:
-        journal_users:
-          user:
-            id:
+        _or:
+          - author_id:
               _eq: X-Hasura-User-Id
+          - journal_users:
+              user:
+                id:
+                  _eq: X-Hasura-User-Id
       allow_aggregations: true
     comment: ""
 update_permissions:
