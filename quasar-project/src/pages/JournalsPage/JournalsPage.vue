@@ -2,6 +2,8 @@
 import { ref, onMounted, computed } from 'vue'
 import { LocalStorage, Dialog } from 'quasar'
 import { useRouter } from 'vue-router'
+import { useQuery, useMutation } from '@vue/apollo-composable'
+
 import { nhost } from 'src/boot/nhost'
 import { gql } from 'graphql-tag'
 
@@ -14,18 +16,26 @@ const GET_JOURNALS_QUERY = gql`
       created_at
       updated_at
       author_id
-      comments_aggregate {
-        aggregate {
-          count
-        }
-      }
+      # comments_aggregate {
+      #   aggregate {
+      #     count
+      #   }
+      # }
     }
   }
 `
 
-const journals = computed(
-  () => nhost.graphql.useQuery(GET_JOURNALS_QUERY).data?.journal ?? [],
+// const journals = computed(
+//   () => nhost.graphql.request(GET_JOURNALS_QUERY).data?.journal ?? [],
+// )
+
+const { result, onResult, refetch, loading, error } = useQuery(
+  GET_JOURNALS_QUERY,
+  {},
+  { fetchPolicy: 'network-only' },
 )
+
+const journals = computed(() => result.value?.journal ?? [])
 
 const INSERT_JOURNAL_MUTATION = gql`
   mutation JournalsPage_InsertJournal($title: String!, $content: String!) {
@@ -44,6 +54,8 @@ const insertJournal = async () => {
   })
   console.log(data)
 }
+
+console.log('process', process.env.MYSECRET)
 
 // const router = useRouter()
 
@@ -133,7 +145,7 @@ const insertJournal = async () => {
 </script>
 <template>
   <q-page class="flex column">
-    <div class="section-header">My Journals</div>
+    <div class="section-header">My Journals {{ journals }}</div>
     <q-btn @click="insertJournal" />
   </q-page>
 </template>
